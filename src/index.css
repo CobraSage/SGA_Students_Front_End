@@ -51,7 +51,6 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* Mobile base styles */
 @media (max-width: 480px) {
   html { font-size: 14px; }
 }
