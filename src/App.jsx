@@ -60,20 +60,21 @@ function stageProgress(stage) {
   return Math.round(((idx + 1) / nonTerminal.length) * 100)
 }
 
+const THEME_MAIN   = '#016BA7'
+const THEME_LIGHT  = '#4FAFDA'
+
 function stageColors(stage) {
-  if (['Passed', 'Completed'].includes(stage))              return { dot: '#2ecc71', text: '#2ecc71', badge: 'rgba(46,204,113,.15)', badgeBorder: 'rgba(46,204,113,.35)' }
-  if (['Failed', 'Suspended', 'Withdrawn'].includes(stage)) return { dot: '#e74c3c', text: '#e74c3c', badge: 'rgba(231,76,60,.15)',  badgeBorder: 'rgba(231,76,60,.35)' }
-  return { dot: '#c9a84c', text: '#e2c97e', badge: 'rgba(201,168,76,.15)', badgeBorder: 'rgba(201,168,76,.35)' }
+  if (['Passed', 'Completed'].includes(stage))              return { dot: '#2ecc71', text: '#27ae60', badge: 'rgba(46,204,113,.15)', badgeBorder: 'rgba(46,204,113,.35)' }
+  if (['Failed', 'Suspended', 'Withdrawn'].includes(stage)) return { dot: '#e74c3c', text: '#c0392b', badge: 'rgba(231,76,60,.15)',  badgeBorder: 'rgba(231,76,60,.35)' }
+  return { dot: THEME_MAIN, text: THEME_MAIN, badge: 'rgba(1,107,167,.1)', badgeBorder: 'rgba(1,107,167,.25)' }
 }
 
-const CARD_BG      = '#0a1628'
-const CARD_BORDER  = 'rgba(255,255,255,.1)'
-const CARD_INNER   = '#0f1f3d'
-const THEME_MAIN   = '#016BA7'
-const THEME_LIGHT   = '#4FAFDA'
-const TEXT_PRIMARY = '#f0f4ff'
-const TEXT_MUTED   = '#7a90b8'
-const TEXT_DIM     = '#3d5275'
+const CARD_BG      = '#FFFFFF'
+const CARD_BORDER  = 'rgba(0,0,0,.1)'
+const CARD_INNER   = '#F8F9FA'
+const TEXT_PRIMARY = '#414141'
+const TEXT_MUTED   = '#6B6B6B'
+const TEXT_DIM     = '#8C8C8C'
 
 const card = (extra = {}) => ({
   background: CARD_BG,
@@ -81,7 +82,7 @@ const card = (extra = {}) => ({
   borderRadius: 16,
   padding: 'clamp(16px,3vw,24px)',
   marginBottom: 14,
-  boxShadow: '0 8px 32px rgba(0,0,0,.25)',
+  boxShadow: '0 8px 24px rgba(0,0,0,.08)',
   ...extra,
 })
 
@@ -108,7 +109,7 @@ function SearchScreen({ onSearch, loading, error }) {
         border: `1px solid ${CARD_BORDER}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         marginBottom: 24,
-        boxShadow: '0 8px 24px rgba(0,0,0,.08)', // Lightened shadow for white theme
+        boxShadow: '0 8px 24px rgba(0,0,0,.08)',
       }}>
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={THEME_MAIN} strokeWidth="1.5">
           <path d="M12 2L2 7l10 5 10-5-10-5z"/>
@@ -120,13 +121,14 @@ function SearchScreen({ onSearch, loading, error }) {
       <h2 style={{
         fontFamily: 'Rajdhani, sans-serif',
         fontSize: 'clamp(24px,5vw,38px)',
-        fontWeight: 700, color: TEXT_PRIMARY, // Updated to use the new dark gray
+        fontWeight: 700, 
+        color: '#FFFFFF',
         letterSpacing: .5, textAlign: 'center', marginBottom: 8,
       }}>
         Track your Application
       </h2>
       <p style={{
-        color: TEXT_MUTED, // Updated to match the new theme
+        color: 'rgba(255,255,255,0.85)',
         fontSize: 'clamp(13px,2vw,15px)',
         textAlign: 'center', maxWidth: 320,
         marginBottom: 'clamp(24px,5vw,36px)', lineHeight: 1.65,
@@ -140,13 +142,13 @@ function SearchScreen({ onSearch, loading, error }) {
           background: CARD_BG,
           border: `1.5px solid ${CARD_BORDER}`,
           borderRadius: 12, overflow: 'hidden',
-          boxShadow: '0 8px 32px rgba(0,0,0,.08)', // Lightened shadow
+          boxShadow: '0 8px 32px rgba(0,0,0,.08)',
         }}>
           <input
             ref={inputRef}
             value={value}
             onChange={e => setValue(e.target.value.toUpperCase())}
-            placeholder="e.g. SGA2601DGCA"
+            placeholder="e.g. SGA123"
             disabled={loading}
             style={{
               flex: 1, minWidth: 0,
@@ -161,9 +163,9 @@ function SearchScreen({ onSearch, loading, error }) {
             disabled={loading || !value.trim()}
             style={{
               padding: 'clamp(13px,2.5vw,16px) clamp(18px,3.5vw,28px)',
-              background: `linear-gradient(135deg, ${THEME_MAIN}, ${THEME_LIGHT})`, // Updated gradient
+              background: `linear-gradient(135deg, ${THEME_MAIN}, ${THEME_LIGHT})`,
               border: 'none', cursor: loading || !value.trim() ? 'not-allowed' : 'pointer',
-              color: '#FFFFFF', // Changed to white for better contrast on blue
+              color: '#FFFFFF',
               fontWeight: 700,
               fontFamily: 'Rajdhani, sans-serif',
               fontSize: 'clamp(12px,2vw,14px)', letterSpacing: 1.5,
@@ -231,13 +233,13 @@ function StageTimeline({ history }) {
               width: 13, height: 13, borderRadius: '50%',
               background: isLatest ? c.dot : 'transparent',
               border: `2px solid ${isLatest ? c.dot : TEXT_DIM}`,
-              boxShadow: isLatest ? `0 0 10px ${c.dot}88` : 'none',
+              boxShadow: isLatest ? `0 0 10px ${c.dot}66` : 'none',
               transition: 'all .3s',
             }} />
 
             <div style={{
-              background: isLatest ? CARD_INNER : 'rgba(255,255,255,.02)',
-              border: `1px solid ${isLatest ? THEME_MAIN + '40' : 'rgba(255,255,255,.06)'}`,
+              background: isLatest ? CARD_INNER : 'rgba(0,0,0,.02)',
+              border: `1px solid ${isLatest ? THEME_MAIN + '40' : 'rgba(0,0,0,.06)'}`,
               borderRadius: 10,
               padding: 'clamp(10px,2vw,13px) clamp(12px,2.5vw,16px)',
               transition: 'all .2s',
@@ -308,13 +310,14 @@ function ResultScreen({ student, onBack }) {
         style={{
           display: 'flex', alignItems: 'center', gap: 7,
           background: 'none', border: 'none', cursor: 'pointer',
-          color: '#0d2f55', fontSize: 13,
+          color: '#FFFFFF',
+          fontSize: 13,
           marginBottom: 'clamp(14px,3vw,22px)',
-          padding: '6px 0', transition: 'color .2s',
+          padding: '6px 0', transition: 'opacity .2s',
           fontFamily: 'DM Sans, sans-serif', fontWeight: 600,
         }}
-        onMouseEnter={e => e.currentTarget.style.color = CARD_BG}
-        onMouseLeave={e => e.currentTarget.style.color = '#0d2f55'}
+        onMouseEnter={e => e.currentTarget.style.opacity = 0.7}
+        onMouseLeave={e => e.currentTarget.style.opacity = 1}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <path d="M19 12H5M12 5l-7 7 7 7"/>
@@ -351,9 +354,9 @@ function ResultScreen({ student, onBack }) {
 
           <div style={{
             padding: '5px 14px', borderRadius: 30, flexShrink: 0,
-            background: 'rgba(255,255,255,.06)',
-            border: '1px solid rgba(255,255,255,.12)',
-            color: TEXT_MUTED,
+            background: 'rgba(0,0,0,.04)',
+            border: '1px solid rgba(0,0,0,.1)',
+            color: TEXT_PRIMARY,
             fontSize: 11, fontWeight: 700,
             fontFamily: 'Rajdhani, sans-serif', letterSpacing: 1.5,
           }}>
@@ -368,17 +371,17 @@ function ResultScreen({ student, onBack }) {
               fontSize: 11, color: TEXT_DIM, marginBottom: 6,
             }}>
               <span style={{ letterSpacing: 1, textTransform: 'uppercase' }}>Progress</span>
-              <span style={{ color: THEME_LIGHT, fontWeight: 700 }}>{progress}%</span>
+              <span style={{ color: THEME_MAIN, fontWeight: 700 }}>{progress}%</span>
             </div>
             <div style={{
               height: 5, borderRadius: 5,
-              background: 'rgba(255,255,255,.06)', overflow: 'hidden',
+              background: 'rgba(0,0,0,.06)', overflow: 'hidden',
             }}>
               <div style={{
                 height: '100%', borderRadius: 5,
                 width: `${progress}%`,
                 background: `linear-gradient(90deg, ${THEME_MAIN}, ${THEME_LIGHT})`,
-                boxShadow: `0 0 10px ${THEME_MAIN}88`,
+                boxShadow: `0 0 10px ${THEME_MAIN}66`,
                 transition: 'width 1s cubic-bezier(.4,0,.2,1)',
               }} />
             </div>
@@ -395,7 +398,7 @@ function ResultScreen({ student, onBack }) {
           <div style={{
             width: 12, height: 12, borderRadius: '50%', flexShrink: 0,
             background: c.dot,
-            boxShadow: `0 0 12px ${c.dot}`,
+            boxShadow: `0 0 12px ${c.dot}66`,
           }} />
           <div>
             <div style={{
@@ -419,7 +422,7 @@ function ResultScreen({ student, onBack }) {
         <div style={{
           display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18,
         }}>
-          <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,.06)' }} />
+          <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,.06)' }} />
           <span style={{
             fontFamily: 'Rajdhani, sans-serif',
             fontSize: 11, fontWeight: 700,
@@ -427,7 +430,7 @@ function ResultScreen({ student, onBack }) {
           }}>
             Stage History
           </span>
-          <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,.06)' }} />
+          <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,.06)' }} />
         </div>
 
         {student.stageHistory?.length > 0 ? (
@@ -444,7 +447,7 @@ function ResultScreen({ student, onBack }) {
 
       <p style={{
         textAlign: 'center', marginTop: 8,
-        fontSize: 11, color: '#0d2f55', lineHeight: 1.8,
+        fontSize: 11, color: 'rgba(255,255,255,0.7)', lineHeight: 1.8,
       }}>
         For queries — starglideraviation@gmail.com &nbsp;|&nbsp; +91 8122279998
       </p>
