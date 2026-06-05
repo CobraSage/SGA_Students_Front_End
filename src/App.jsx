@@ -69,8 +69,8 @@ function stageColors(stage) {
 const CARD_BG      = '#0a1628'
 const CARD_BORDER  = 'rgba(255,255,255,.1)'
 const CARD_INNER   = '#0f1f3d'
-const GOLD         = '#c9a84c'
-const GOLD_LIGHT   = '#e2c97e'
+const THEME_MAIN   = '#016BA7'
+const THEME_LIGHT   = '#4FAFDA'
 const TEXT_PRIMARY = '#f0f4ff'
 const TEXT_MUTED   = '#7a90b8'
 const TEXT_DIM     = '#3d5275'
@@ -108,9 +108,9 @@ function SearchScreen({ onSearch, loading, error }) {
         border: `1px solid ${CARD_BORDER}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         marginBottom: 24,
-        boxShadow: '0 8px 24px rgba(0,0,0,.3)',
+        boxShadow: '0 8px 24px rgba(0,0,0,.08)', // Lightened shadow for white theme
       }}>
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.5">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={THEME_MAIN} strokeWidth="1.5">
           <path d="M12 2L2 7l10 5 10-5-10-5z"/>
           <path d="M2 17l10 5 10-5"/>
           <path d="M2 12l10 5 10-5"/>
@@ -120,14 +120,13 @@ function SearchScreen({ onSearch, loading, error }) {
       <h2 style={{
         fontFamily: 'Rajdhani, sans-serif',
         fontSize: 'clamp(24px,5vw,38px)',
-        fontWeight: 700, color: CARD_BG,
+        fontWeight: 700, color: TEXT_PRIMARY, // Updated to use the new dark gray
         letterSpacing: .5, textAlign: 'center', marginBottom: 8,
-        textShadow: '0 1px 3px rgba(255,255,255,.15)',
       }}>
-        Track Your Progress
+        Track your Application
       </h2>
       <p style={{
-        color: '#0d2f55',
+        color: TEXT_MUTED, // Updated to match the new theme
         fontSize: 'clamp(13px,2vw,15px)',
         textAlign: 'center', maxWidth: 320,
         marginBottom: 'clamp(24px,5vw,36px)', lineHeight: 1.65,
@@ -141,7 +140,7 @@ function SearchScreen({ onSearch, loading, error }) {
           background: CARD_BG,
           border: `1.5px solid ${CARD_BORDER}`,
           borderRadius: 12, overflow: 'hidden',
-          boxShadow: '0 8px 32px rgba(0,0,0,.25)',
+          boxShadow: '0 8px 32px rgba(0,0,0,.08)', // Lightened shadow
         }}>
           <input
             ref={inputRef}
@@ -162,9 +161,10 @@ function SearchScreen({ onSearch, loading, error }) {
             disabled={loading || !value.trim()}
             style={{
               padding: 'clamp(13px,2.5vw,16px) clamp(18px,3.5vw,28px)',
-              background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})`,
+              background: `linear-gradient(135deg, ${THEME_MAIN}, ${THEME_LIGHT})`, // Updated gradient
               border: 'none', cursor: loading || !value.trim() ? 'not-allowed' : 'pointer',
-              color: '#0a1628', fontWeight: 700,
+              color: '#FFFFFF', // Changed to white for better contrast on blue
+              fontWeight: 700,
               fontFamily: 'Rajdhani, sans-serif',
               fontSize: 'clamp(12px,2vw,14px)', letterSpacing: 1.5,
               display: 'flex', alignItems: 'center', gap: 7,
@@ -175,8 +175,8 @@ function SearchScreen({ onSearch, loading, error }) {
           >
             {loading ? (
               <svg width="16" height="16" viewBox="0 0 24 24" style={{ animation: 'spin 1s linear infinite' }}>
-                <circle cx="12" cy="12" r="10" stroke="rgba(0,0,0,.2)" strokeWidth="3" fill="none"/>
-                <path d="M12 2a10 10 0 0 1 10 10" stroke="#0a1628" strokeWidth="3" fill="none" strokeLinecap="round"/>
+                <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,.3)" strokeWidth="3" fill="none"/>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke="#FFFFFF" strokeWidth="3" fill="none" strokeLinecap="round"/>
               </svg>
             ) : (
               <>
@@ -192,12 +192,12 @@ function SearchScreen({ onSearch, loading, error }) {
         {error && (
           <div style={{
             marginTop: 12, padding: '10px 16px',
-            background: 'rgba(10,22,40,.9)',
+            background: '#FFF4F4',
             border: '1px solid rgba(231,76,60,.4)',
-            borderRadius: 8, color: '#ff8a80',
+            borderRadius: 8, color: '#e74c3c',
             fontSize: 'clamp(12px,2vw,13px)',
             animation: 'fadeUp .3s ease',
-            boxShadow: '0 4px 16px rgba(0,0,0,.2)',
+            boxShadow: '0 4px 16px rgba(0,0,0,.05)',
           }}>
             {error}
           </div>
@@ -213,7 +213,7 @@ function StageTimeline({ history }) {
       <div style={{
         position: 'absolute', left: 7, top: 10,
         width: 1, height: 'calc(100% - 20px)',
-        background: `linear-gradient(to bottom, ${GOLD}66, transparent)`,
+        background: `linear-gradient(to bottom, ${THEME_MAIN}66, transparent)`,
       }} />
 
       {history.map((item, i) => {
@@ -237,7 +237,7 @@ function StageTimeline({ history }) {
 
             <div style={{
               background: isLatest ? CARD_INNER : 'rgba(255,255,255,.02)',
-              border: `1px solid ${isLatest ? GOLD + '40' : 'rgba(255,255,255,.06)'}`,
+              border: `1px solid ${isLatest ? THEME_MAIN + '40' : 'rgba(255,255,255,.06)'}`,
               borderRadius: 10,
               padding: 'clamp(10px,2vw,13px) clamp(12px,2.5vw,16px)',
               transition: 'all .2s',
@@ -368,7 +368,7 @@ function ResultScreen({ student, onBack }) {
               fontSize: 11, color: TEXT_DIM, marginBottom: 6,
             }}>
               <span style={{ letterSpacing: 1, textTransform: 'uppercase' }}>Progress</span>
-              <span style={{ color: GOLD_LIGHT, fontWeight: 700 }}>{progress}%</span>
+              <span style={{ color: THEME_LIGHT, fontWeight: 700 }}>{progress}%</span>
             </div>
             <div style={{
               height: 5, borderRadius: 5,
@@ -377,8 +377,8 @@ function ResultScreen({ student, onBack }) {
               <div style={{
                 height: '100%', borderRadius: 5,
                 width: `${progress}%`,
-                background: `linear-gradient(90deg, ${GOLD}, ${GOLD_LIGHT})`,
-                boxShadow: `0 0 10px ${GOLD}88`,
+                background: `linear-gradient(90deg, ${THEME_MAIN}, ${THEME_LIGHT})`,
+                boxShadow: `0 0 10px ${THEME_MAIN}88`,
                 transition: 'width 1s cubic-bezier(.4,0,.2,1)',
               }} />
             </div>
